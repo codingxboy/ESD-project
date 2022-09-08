@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yunhe.common.redis.utils.RedisUtil,\
+  com.yunhe.common.redis.config.RedisConfig,\
+  com.yunhe.common.redis.config.RedissonConfig,\
+  com.yunhe.common.redis.config.RedisCacheConfig
+

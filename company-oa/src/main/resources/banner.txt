@@ -1,0 +1,33 @@
+${AnsiColor.BLUE}                                 ${AnsiColor.BRIGHT_MAGENTA}_${AnsiColor.BRIGHT_MAGENTA}
+                              ${AnsiColor.BRIGHT_MAGENTA}_ooOoo_${AnsiColor.BRIGHT_MAGENTA}
+                             ${AnsiColor.BRIGHT_MAGENTA}o8888888o${AnsiColor.BRIGHT_MAGENTA}
+                             ${AnsiColor.BRIGHT_MAGENTA}88${AnsiColor.BLUE}" . "${AnsiColor.BRIGHT_MAGENTA}88${AnsiColor.BLUE}
+                             (| -_- |)
+                             O\  =  /O
+                          ____/`---'\____
+                        .'  \\|     |//  `.
+                       /  \\|||  :  |||//  \
+                      /  _||||| -:- |||||_  \
+                      |   | \\\  -  /'| |   |
+                      | \_|  `\`---'//  |_/ |
+                      \  .-\__ `-. -'__/-.  /
+                    ___`. .'  /--.--\  `. .'___
+                 ."" '<  `.___\_<|>_/___.' _> \"".
+                | | :  `- \`. ;`. _/; .'/ /  .' ; |
+                \  \ `-.   \_\_`. _.'_/_/  -' _.' /
+  ================-.`___`-.__\ \___  /__.-'_.'_.-'================
+                              `=--=-'                    ${AnsiColor.BRIGHT_RED}xzq
+                      佛祖保佑，永不出错，永无bug!${AnsiColor.BRIGHT_MAGENTA}
+  ________   ________                 ________  ________
+ |\   ___  \|\   __  \               |\   __  \|\   __  \
+ \ \  \\ \  \ \  \|\ /_  ____________\ \  \|\  \ \  \|\  \
+  \ \  \\ \  \ \   __  \|\____________\ \  \\\  \ \   __  \
+   \ \  \\ \  \ \  \|\  \|____________|\ \  \\\  \ \  \ \  \
+    \ \__\\ \__\ \_______\              \ \_______\ \__\ \__\
+     \|__| \|__|\|_______|               \|_______|\|__|\|__|
+
+${AnsiColor.BLUE}
+Gitee: https://gitee.com/jochens/sso-test
+Github: https://github.com/codingxboy/codingxboy.github.io
+springboot版本：${spring-boot.version}
+${AnsiColor.BRIGHT_BLACK}

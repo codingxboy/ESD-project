@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.company.erp.generator.mappers.UserBOMapper">
+    <resultMap extends="com.yunhe.company.erp.generator.mappers.UserMapper.BaseResultMap" id="ResultMapEx" type="com.yunhe.company.erp.common.bo.UserBO">
+        <result column="orgaId" jdbcType="BIGINT" property="orgaId" />
+        <result column="org_abr" jdbcType="VARCHAR" property="orgAbr" />
+        <result column="user_blng_orga_dspl_seq" jdbcType="VARCHAR" property="userBlngOrgaDsplSeq" />
+        <result column="orgaUserRelId" jdbcType="BIGINT" property="orgaUserRelId" />
+        <result column="roleId" jdbcType="VARCHAR" property="roleId" />
+        <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    </resultMap>
+    <select id="selectByConditionUser" parameterType="com.yunhe.entity.domain.erp.UserExample" resultMap="ResultMapEx">
+        select tb.*,
+        (select r.id from erp_user_business ub
+        left join erp_role r on ub.value=concat("[",r.id,"]") and ifnull(r.delete_flag,'0') !='1'
+        where ub.type='UserRole' and ub.key_id=tb.id limit 0,1) roleId,
+        (select r.name from erp_user_business ub
+        left join erp_role r on ub.value=concat("[",r.id,"]") and ifnull(r.delete_flag,'0') !='1'
+        where ub.type='UserRole' and ub.key_id=tb.id limit 0,1) roleName
+        from (
+        select user.id, user.username, user.login_name, user.position, user.email, user.phone_num,
+        user.description, user.remark,user.isystem,org.id as orgaId,user.tenant_id,user.status,org.org_abr,
+        rel.user_blng_orga_dspl_seq,rel.id as orgaUserRelId
+        FROM erp_user user
+        left join erp_orga_user_rel rel on user.id=rel.user_id and ifnull(rel.delete_flag,'0') !='1'
+        left join erp_organization org on rel.orga_id=org.id and ifnull(org.delete_flag,'0') !='1'
+        where 1=1
+        and user.status !='1'
+        <if test="userName != null">
+            <bind name="bindUserName" value="'%'+userName+'%'"/>
+            and user.user_name like #{bindUserName}
+        </if>
+        <if test="loginName != null">
+            <bind name="bindLoginName" value="'%'+loginName+'%'"/>
+            and user.login_name like #{bindLoginName}
+        </if>
+        order by rel.user_blng_orga_dspl_seq,user.id desc
+        <if test="offset != null and rows != null">
+            limit #{offset},#{rows}
+        </if>
+        ) tb
+    </select>
+    <select id="countsByUser" resultType="java.lang.Long">
+        select count(user.id)
+        FROM erp_user user
+        where 1=1
+        and user.status !='1'
+        <if test="userName != null">
+            <bind name="bindUserName" value="'%'+userName+'%'"/>
+            and user.user_name like #{bindUserName}
+        </if>
+        <if test="loginName != null">
+            <bind name="bindLoginName" value="'%'+loginName+'%'"/>
+            and user.login_name like #{bindLoginName}
+        </if>
+    </select>
+    <select id="getUserListByUserNameOrLoginName" resultMap="com.yunhe.company.erp.generator.mappers.UserMapper.BaseResultMap">
+        select user.id, user.user_name, user.login_name,user.pass_word,user.department,user.is_manager,user.status,user.position, user.email, user.phone_num,
+        user.description, user.remark,user.is_system,user.salt
+        FROM erp_user user
+        where 1=1
+        and ifnull(user.status,'0') not in('1','2')
+        <if test="userName != null and userName != ''">
+            and user.user_name = #{userName}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            and user.login_name = #{loginName}
+        </if>
+        order by user.id desc
+    </select>
+    <update id="batDeleteOrUpdateUser">
+        update erp_user
+        set status=#{status}
+        where id in (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </update>
+    <resultMap id="BaseTreeResultMap" type="com.yunhe.company.erp.generator.vo.TreeNodeEx">
+        <result column="id" property="id"/>
+        <result column="text" property="text"/>
+        <association property="attributes" javaType="com.yunhe.company.erp.generator.vo.NodeAttributes">
+            <id column="orgNo" property="no"></id>
+            <result column="type" property="type"></result>
+        </association>
+        <collection column="{orgId=id,orgNo=orgNo}" property="children" javaType="java.util.ArrayList"
+                    ofType="com.yunhe.company.erp.generator.vo.TreeNode" select="getNextNodeTree"/>
+    </resultMap>
+
+    <resultMap id="NextTreeResultMap" type="com.yunhe.company.erp.generator.vo.TreeNodeEx">
+        <result column="id" property="id"/>
+        <result column="text" property="text"/>
+        <result column="iconCls" property="iconCls"/>
+        <association property="attributes" javaType="com.yunhe.company.erp.generator.vo.NodeAttributes">
+            <id column="orgNo" property="no"></id>
+            <result column="type" property="type"></result>
+        </association>
+        <collection column="{orgId=id,orgNo=orgNo}" property="children" javaType="java.util.ArrayList"
+                    ofType="com.yunhe.company.erp.generator.vo.TreeNode" select="getNextNodeTree"/>
+    </resultMap>
+
+    <select id="getNextNodeTree" resultMap="NextTreeResultMap">
+        select id ,	text,orgNo,sort ,iconCls,type from (
+            SELECT
+            org.id, org.org_abr as text,org.org_no as orgNo,org.sort as sort,null as iconCls,'0' as type
+            FROM erp_organization org
+            WHERE org.org_parent_no = #{orgNo}
+            and ifnull(org.org_stcd,'0') !='5'
+            union all
+            select
+            user.id,user.username as text, null as orgNo,rel.user_blng_orga_dspl_seq as sort,'icon-user' as iconCls,'1' as type
+            from erp_user user,erp_orga_user_rel rel
+            where
+            1=1
+            and user.id=rel.user_id
+            and rel.orga_id=#{orgId}
+            and ifnull(rel.delete_flag,'0') !='1'
+            and ifnull(user.status,'0') not in('1','2')
+          ) node
+          order by sort asc
+    </select>
+
+    <select id="getNodeTree" resultMap="BaseTreeResultMap">
+        SELECT
+         id, org_abr as text,org_no as orgNo,'0' as type
+        FROM erp_organization
+        WHERE org_parent_no = -1
+        and ifnull(org_stcd,'0') !='5'
+        order by sort asc
+    </select>
+</mapper>

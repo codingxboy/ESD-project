@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>company-common</artifactId>
+        <groupId>com.yunhe</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>common-flowable</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <flowable-spring-boot-starter-actuator.version>6.4.2</flowable-spring-boot-starter-actuator.version>
+        <flowable-spring-boot-starter-process.version>6.4.2</flowable-spring-boot-starter-process.version>
+    </properties>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.flowable/flowable-spring-boot-starter-actuator -->
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-actuator</artifactId>
+            <version>${flowable-spring-boot-starter-actuator.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.flowable/flowable-spring-boot-starter-process -->
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-process</artifactId>
+            <version>${flowable-spring-boot-starter-process.version}</version>
+        </dependency>
+    </dependencies>
+
+
+
+</project>

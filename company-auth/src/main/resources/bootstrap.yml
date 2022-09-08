@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: company-auth
+  profiles:
+    active: dev

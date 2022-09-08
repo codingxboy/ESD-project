@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: company-gateway
+  profiles:
+    active: dev

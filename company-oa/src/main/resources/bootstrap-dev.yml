@@ -1,0 +1,19 @@
+server:
+  port: 9999
+
+spring:
+  cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: http://localhost:8840
+      # 配置中心
+      config:
+#        server-addr: http://c.youlai.tech:8848
+        server-addr: http://localhost:8840
+        namespace: company-namespace-id
+        file-extension: yaml
+        shared-configs[0]:
+          data-id: company-common.yaml
+          refresh: true
+

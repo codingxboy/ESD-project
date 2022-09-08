@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: company-oa
+  profiles:
+    active: dev

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!--    <classPathEntry location="E:\maven_xzq\repertory\mysql\8.0.19\mysql-connector-java-8.0.19.jar"/>-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- <plugin>元素用来定义一个插件。插件用于扩展或修改通过MyBatis Generator (MBG)代码生成器生成的代码。 -->
+<!--        <plugin type="com.liuzhiqiang.tools.BasePlugin"/>-->
+
+        <commentGenerator>
+            <property name="javaFileEncoding" value="UTF-8"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!--<jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.connectionURL}"
+                        userId="${jdbc.userId}"
+                        password="${jdbc.password}">
+            &lt;!&ndash;解决mysql驱动升级到8.0后不生成指定数据库代码的问题&ndash;&gt;
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/nb_erp?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai&amp;generateSimpleParameterMetadata=true"
+                        userId="root" password="123456">
+        </jdbcConnection>
+
+        <!--生成Model实体类存放位置-->
+        <javaModelGenerator targetPackage="com.yunhe.company.erp.generator.entities"
+                            targetProject="company-erp/src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+
+        <!--生成映射文件xml存放位置-->
+        <sqlMapGenerator targetPackage="mapper_xml" targetProject="company-erp/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+
+        <!--生成mapper接口存放位置-->
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.yunhe.company.erp.generator.mappers"
+                             targetProject="company-erp/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="exampleMethodVisibility" value="public"/>
+        </javaClientGenerator>
+
+        <table tableName="erp_account" domainObjectName="Account"></table>
+        <table tableName="erp_account_head" domainObjectName="AccountHead"></table>
+        <table tableName="erp_account_item" domainObjectName="AccountItem"></table>
+        <table tableName="erp_depot" domainObjectName="Depot"></table>
+        <table tableName="erp_depot_head" domainObjectName="DepotHead"></table>
+        <table tableName="erp_depot_item" domainObjectName="DepotItem"></table>
+        <table tableName="erp_function" domainObjectName="Function"></table>
+        <table tableName="erp_inoutitem" domainObjectName="InOutItem"></table>
+        <table tableName="erp_log" domainObjectName="Log"></table>
+        <table tableName="erp_material" domainObjectName="Material"></table>
+        <table tableName="erp_material_attribute" domainObjectName="MaterialAttribute"></table>
+        <table tableName="erp_material_extend" domainObjectName="MaterialExtend"></table>
+        <table tableName="erp_material_current_stock" domainObjectName="MaterialCurrentStock"></table>
+        <table tableName="erp_material_initial_stock" domainObjectName="MaterialInitialStock"></table>
+        <table tableName="erp_material_category" domainObjectName="MaterialCategory"></table>
+        <table tableName="erp_material_property" domainObjectName="MaterialProperty"></table>
+        <table tableName="erp_person" domainObjectName="Person"></table>
+        <table tableName="erp_role" domainObjectName="Role"></table>
+        <table tableName="erp_supplier" domainObjectName="Supplier"></table>
+        <table tableName="erp_system_config" domainObjectName="SystemConfig"></table>
+        <table tableName="erp_unit" domainObjectName="Unit"></table>
+        <table tableName="erp_user" domainObjectName="User"></table>
+        <table tableName="erp_user_business" domainObjectName="UserBusiness"></table>
+        <table tableName="erp_serial_number" domainObjectName="SerialNumber"></table>
+        <table tableName="erp_organization" domainObjectName="Organization"></table>
+        <table tableName="erp_orga_user_rel" domainObjectName="OrgaUserRel"></table>
+        <table tableName="erp_platform_config" domainObjectName="PlatformConfig"></table>
+        <table tableName="erp_msg" domainObjectName="Msg"></table>
+    </context>
+</generatorConfiguration>

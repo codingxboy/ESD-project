@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yunhe.common.web.config.WebMvcConfig,\
+  com.yunhe.common.web.exception.GlobalExceptionHandler

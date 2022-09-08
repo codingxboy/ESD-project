@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunhe.company.erp.generator.mappers.ExcLogsMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.erp.ExcLogs">
+    <result column="exc_id" jdbcType="VARCHAR" property="excId" />
+    <result column="exc_name" jdbcType="VARCHAR" property="excName" />
+    <result column="oper_user_id" jdbcType="VARCHAR" property="operUserId" />
+    <result column="oper_user_name" jdbcType="VARCHAR" property="operUserName" />
+    <result column="oper_method" jdbcType="VARCHAR" property="operMethod" />
+    <result column="oper_uri" jdbcType="VARCHAR" property="operUri" />
+    <result column="oper_ip" jdbcType="VARCHAR" property="operIp" />
+    <result column="oper_ver" jdbcType="VARCHAR" property="operVer" />
+    <result column="oper_create_time" jdbcType="TIMESTAMP" property="operCreateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yunhe.entity.domain.erp.ExcLogsWithBLOBs">
+    <result column="exc_requ_param" jdbcType="LONGVARCHAR" property="excRequParam" />
+    <result column="exc_message" jdbcType="LONGVARCHAR" property="excMessage" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    exc_id, exc_name,oper_user_id, oper_user_name, oper_method, oper_uri, oper_ip, oper_ver,
+    oper_create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    exc_requ_param, exc_message
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yunhe.entity.domain.erp.ExcLogsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from erp_exc_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.erp.ExcLogsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from erp_exc_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.erp.ExcLogsExample">
+    delete from erp_exc_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yunhe.entity.domain.erp.ExcLogsWithBLOBs">
+    insert into erp_exc_logs (exc_id, exc_name, oper_user_id,
+      oper_user_name, oper_method, oper_uri,
+      oper_ip, oper_ver, oper_create_time,
+      exc_requ_param, exc_message)
+    values (#{excId,jdbcType=VARCHAR}, #{excName,jdbcType=VARCHAR}, #{operUserId,jdbcType=VARCHAR},
+      #{operUserName,jdbcType=VARCHAR}, #{operMethod,jdbcType=VARCHAR}, #{operUri,jdbcType=VARCHAR},
+      #{operIp,jdbcType=VARCHAR}, #{operVer,jdbcType=VARCHAR}, #{operCreateTime,jdbcType=TIMESTAMP},
+      #{excRequParam,jdbcType=LONGVARCHAR}, #{excMessage,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.erp.ExcLogsWithBLOBs">
+    insert into erp_exc_logs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="excId != null">
+        exc_id,
+      </if>
+      <if test="excName != null">
+        exc_name,
+      </if>
+      <if test="operUserId != null">
+        oper_user_id,
+      </if>
+      <if test="operUserName != null">
+        oper_user_name,
+      </if>
+      <if test="operMethod != null">
+        oper_method,
+      </if>
+      <if test="operUri != null">
+        oper_uri,
+      </if>
+      <if test="operIp != null">
+        oper_ip,
+      </if>
+      <if test="operVer != null">
+        oper_ver,
+      </if>
+      <if test="operCreateTime != null">
+        oper_create_time,
+      </if>
+      <if test="excRequParam != null">
+        exc_requ_param,
+      </if>
+      <if test="excMessage != null">
+        exc_message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="excId != null">
+        #{excId,jdbcType=VARCHAR},
+      </if>
+      <if test="excName != null">
+        #{excName,jdbcType=VARCHAR},
+      </if>
+      <if test="operUserId != null">
+        #{operUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="operUserName != null">
+        #{operUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="operMethod != null">
+        #{operMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="operUri != null">
+        #{operUri,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null">
+        #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operVer != null">
+        #{operVer,jdbcType=VARCHAR},
+      </if>
+      <if test="operCreateTime != null">
+        #{operCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="excRequParam != null">
+        #{excRequParam,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="excMessage != null">
+        #{excMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.erp.ExcLogsExample" resultType="java.lang.Long">
+    select count(*) from erp_exc_logs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update erp_exc_logs
+    <set>
+      <if test="record.excId != null">
+        exc_id = #{record.excId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.excName != null">
+        exc_name = #{record.excName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operUserId != null">
+        oper_user_id = #{record.operUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operUserName != null">
+        oper_user_name = #{record.operUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operMethod != null">
+        oper_method = #{record.operMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operUri != null">
+        oper_uri = #{record.operUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operIp != null">
+        oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operVer != null">
+        oper_ver = #{record.operVer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operCreateTime != null">
+        oper_create_time = #{record.operCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.excRequParam != null">
+        exc_requ_param = #{record.excRequParam,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.excMessage != null">
+        exc_message = #{record.excMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update erp_exc_logs
+    set exc_id = #{record.excId,jdbcType=VARCHAR},
+      exc_name = #{record.excName,jdbcType=VARCHAR},
+      oper_user_id = #{record.operUserId,jdbcType=VARCHAR},
+      oper_user_name = #{record.operUserName,jdbcType=VARCHAR},
+      oper_method = #{record.operMethod,jdbcType=VARCHAR},
+      oper_uri = #{record.operUri,jdbcType=VARCHAR},
+      oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      oper_ver = #{record.operVer,jdbcType=VARCHAR},
+      oper_create_time = #{record.operCreateTime,jdbcType=TIMESTAMP},
+      exc_requ_param = #{record.excRequParam,jdbcType=LONGVARCHAR},
+      exc_message = #{record.excMessage,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update erp_exc_logs
+    set exc_id = #{record.excId,jdbcType=VARCHAR},
+      exc_name = #{record.excName,jdbcType=VARCHAR},
+      oper_user_id = #{record.operUserId,jdbcType=VARCHAR},
+      oper_user_name = #{record.operUserName,jdbcType=VARCHAR},
+      oper_method = #{record.operMethod,jdbcType=VARCHAR},
+      oper_uri = #{record.operUri,jdbcType=VARCHAR},
+      oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      oper_ver = #{record.operVer,jdbcType=VARCHAR},
+      oper_create_time = #{record.operCreateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
