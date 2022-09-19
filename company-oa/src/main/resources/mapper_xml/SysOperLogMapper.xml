@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunhe.company.oa.mappers.OperLogMapper">
-  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.OperLog">
+<mapper namespace="com.yunhe.company.oa.mappers.SysOperLogMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.SysOperLog">
     <result column="oper_id" jdbcType="BIGINT" property="operId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="business_type" jdbcType="INTEGER" property="businessType" />
@@ -82,14 +82,14 @@
     dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg,
     oper_time
   </sql>
-  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.OperLogExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysOperLogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_oper_log
+    from sys_oper_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,14 +97,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.OperLogExample">
-    delete from oa_oper_log
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysOperLogExample">
+    delete from sys_oper_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.OperLog">
-    insert into oa_oper_log (oper_id, title, business_type,
+  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysOperLog">
+    insert into sys_oper_log (oper_id, title, business_type,
       method, request_method, operator_type,
       oper_name, dept_name, oper_url,
       oper_ip, oper_location, oper_param,
@@ -117,8 +117,8 @@
       #{jsonResult,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{errorMsg,jdbcType=VARCHAR},
       #{operTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.OperLog">
-    insert into oa_oper_log
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysOperLog">
+    insert into sys_oper_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="operId != null">
         oper_id,
@@ -220,14 +220,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.OperLogExample" resultType="java.lang.Long">
-    select count(*) from oa_oper_log
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysOperLogExample" resultType="java.lang.Long">
+    select count(*) from sys_oper_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_oper_log
+    update sys_oper_log
     <set>
       <if test="record.operId != null">
         oper_id = #{record.operId,jdbcType=BIGINT},
@@ -283,7 +283,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_oper_log
+    update sys_oper_log
     set oper_id = #{record.operId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       business_type = #{record.businessType,jdbcType=INTEGER},

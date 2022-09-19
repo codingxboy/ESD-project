@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunhe.company.oa.mappers.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.Menu">
-    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
-    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
-    <result column="path" jdbcType="VARCHAR" property="path" />
-    <result column="component" jdbcType="VARCHAR" property="component" />
-    <result column="is_frame" jdbcType="INTEGER" property="isFrame" />
-    <result column="menu_type" jdbcType="CHAR" property="menuType" />
-    <result column="visible" jdbcType="CHAR" property="visible" />
-    <result column="perms" jdbcType="VARCHAR" property="perms" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
+<mapper namespace="com.yunhe.company.oa.mappers.SysDictDataMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.SysDictData">
+    <result column="dict_code" jdbcType="BIGINT" property="dictCode" />
+    <result column="dict_sort" jdbcType="INTEGER" property="dictSort" />
+    <result column="dict_label" jdbcType="VARCHAR" property="dictLabel" />
+    <result column="dict_value" jdbcType="VARCHAR" property="dictValue" />
+    <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
+    <result column="css_class" jdbcType="VARCHAR" property="cssClass" />
+    <result column="list_class" jdbcType="VARCHAR" property="listClass" />
+    <result column="is_default" jdbcType="CHAR" property="isDefault" />
+    <result column="status" jdbcType="CHAR" property="status" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
@@ -78,17 +76,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible,
-    perms, icon, create_by, create_time, update_by, update_time, remark
+    dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default,
+    status, create_by, create_time, update_by, update_time, remark
   </sql>
-  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.MenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysDictDataExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_menu
+    from sys_dict_data
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,55 +94,53 @@
       order by ${orderByClause}
     </if>
   </select>
-  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.Menu">
-    insert into oa_menu (menu_id, menu_name, parent_id,
-      order_num, path, component,
-      is_frame, menu_type, visible,
-      perms, icon, create_by,
-      create_time, update_by, update_time,
-      remark)
-    values (#{menuId,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT},
-      #{orderNum,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR},
-      #{isFrame,jdbcType=INTEGER}, #{menuType,jdbcType=CHAR}, #{visible,jdbcType=CHAR},
-      #{perms,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-      #{remark,jdbcType=VARCHAR})
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysDictDataExample">
+    delete from sys_dict_data
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysDictData">
+    insert into sys_dict_data (dict_code, dict_sort, dict_label,
+      dict_value, dict_type, css_class,
+      list_class, is_default, status,
+      create_by, create_time, update_by,
+      update_time, remark)
+    values (#{dictCode,jdbcType=BIGINT}, #{dictSort,jdbcType=INTEGER}, #{dictLabel,jdbcType=VARCHAR},
+      #{dictValue,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR}, #{cssClass,jdbcType=VARCHAR},
+      #{listClass,jdbcType=VARCHAR}, #{isDefault,jdbcType=CHAR}, #{status,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.Menu">
-    insert into oa_menu
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysDictData">
+    insert into sys_dict_data
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="menuId != null">
-        menu_id,
+      <if test="dictCode != null">
+        dict_code,
       </if>
-      <if test="menuName != null">
-        menu_name,
+      <if test="dictSort != null">
+        dict_sort,
       </if>
-      <if test="parentId != null">
-        parent_id,
+      <if test="dictLabel != null">
+        dict_label,
       </if>
-      <if test="orderNum != null">
-        order_num,
+      <if test="dictValue != null">
+        dict_value,
       </if>
-      <if test="path != null">
-        path,
+      <if test="dictType != null">
+        dict_type,
       </if>
-      <if test="component != null">
-        component,
+      <if test="cssClass != null">
+        css_class,
       </if>
-      <if test="isFrame != null">
-        is_frame,
+      <if test="listClass != null">
+        list_class,
       </if>
-      <if test="menuType != null">
-        menu_type,
+      <if test="isDefault != null">
+        is_default,
       </if>
-      <if test="visible != null">
-        visible,
-      </if>
-      <if test="perms != null">
-        perms,
-      </if>
-      <if test="icon != null">
-        icon,
+      <if test="status != null">
+        status,
       </if>
       <if test="createBy != null">
         create_by,
@@ -163,38 +159,32 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="menuId != null">
-        #{menuId,jdbcType=BIGINT},
+      <if test="dictCode != null">
+        #{dictCode,jdbcType=BIGINT},
       </if>
-      <if test="menuName != null">
-        #{menuName,jdbcType=VARCHAR},
+      <if test="dictSort != null">
+        #{dictSort,jdbcType=INTEGER},
       </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=BIGINT},
+      <if test="dictLabel != null">
+        #{dictLabel,jdbcType=VARCHAR},
       </if>
-      <if test="orderNum != null">
-        #{orderNum,jdbcType=INTEGER},
+      <if test="dictValue != null">
+        #{dictValue,jdbcType=VARCHAR},
       </if>
-      <if test="path != null">
-        #{path,jdbcType=VARCHAR},
+      <if test="dictType != null">
+        #{dictType,jdbcType=VARCHAR},
       </if>
-      <if test="component != null">
-        #{component,jdbcType=VARCHAR},
+      <if test="cssClass != null">
+        #{cssClass,jdbcType=VARCHAR},
       </if>
-      <if test="isFrame != null">
-        #{isFrame,jdbcType=INTEGER},
+      <if test="listClass != null">
+        #{listClass,jdbcType=VARCHAR},
       </if>
-      <if test="menuType != null">
-        #{menuType,jdbcType=CHAR},
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=CHAR},
       </if>
-      <if test="visible != null">
-        #{visible,jdbcType=CHAR},
-      </if>
-      <if test="perms != null">
-        #{perms,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -213,47 +203,41 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.MenuExample" resultType="java.lang.Long">
-    select count(*) from oa_menu
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysDictDataExample" resultType="java.lang.Long">
+    select count(*) from sys_dict_data
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_menu
+    update sys_dict_data
     <set>
-      <if test="record.menuId != null">
-        menu_id = #{record.menuId,jdbcType=BIGINT},
+      <if test="record.dictCode != null">
+        dict_code = #{record.dictCode,jdbcType=BIGINT},
       </if>
-      <if test="record.menuName != null">
-        menu_name = #{record.menuName,jdbcType=VARCHAR},
+      <if test="record.dictSort != null">
+        dict_sort = #{record.dictSort,jdbcType=INTEGER},
       </if>
-      <if test="record.parentId != null">
-        parent_id = #{record.parentId,jdbcType=BIGINT},
+      <if test="record.dictLabel != null">
+        dict_label = #{record.dictLabel,jdbcType=VARCHAR},
       </if>
-      <if test="record.orderNum != null">
-        order_num = #{record.orderNum,jdbcType=INTEGER},
+      <if test="record.dictValue != null">
+        dict_value = #{record.dictValue,jdbcType=VARCHAR},
       </if>
-      <if test="record.path != null">
-        path = #{record.path,jdbcType=VARCHAR},
+      <if test="record.dictType != null">
+        dict_type = #{record.dictType,jdbcType=VARCHAR},
       </if>
-      <if test="record.component != null">
-        component = #{record.component,jdbcType=VARCHAR},
+      <if test="record.cssClass != null">
+        css_class = #{record.cssClass,jdbcType=VARCHAR},
       </if>
-      <if test="record.isFrame != null">
-        is_frame = #{record.isFrame,jdbcType=INTEGER},
+      <if test="record.listClass != null">
+        list_class = #{record.listClass,jdbcType=VARCHAR},
       </if>
-      <if test="record.menuType != null">
-        menu_type = #{record.menuType,jdbcType=CHAR},
+      <if test="record.isDefault != null">
+        is_default = #{record.isDefault,jdbcType=CHAR},
       </if>
-      <if test="record.visible != null">
-        visible = #{record.visible,jdbcType=CHAR},
-      </if>
-      <if test="record.perms != null">
-        perms = #{record.perms,jdbcType=VARCHAR},
-      </if>
-      <if test="record.icon != null">
-        icon = #{record.icon,jdbcType=VARCHAR},
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=CHAR},
       </if>
       <if test="record.createBy != null">
         create_by = #{record.createBy,jdbcType=VARCHAR},
@@ -276,18 +260,16 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_menu
-    set menu_id = #{record.menuId,jdbcType=BIGINT},
-      menu_name = #{record.menuName,jdbcType=VARCHAR},
-      parent_id = #{record.parentId,jdbcType=BIGINT},
-      order_num = #{record.orderNum,jdbcType=INTEGER},
-      path = #{record.path,jdbcType=VARCHAR},
-      component = #{record.component,jdbcType=VARCHAR},
-      is_frame = #{record.isFrame,jdbcType=INTEGER},
-      menu_type = #{record.menuType,jdbcType=CHAR},
-      visible = #{record.visible,jdbcType=CHAR},
-      perms = #{record.perms,jdbcType=VARCHAR},
-      icon = #{record.icon,jdbcType=VARCHAR},
+    update sys_dict_data
+    set dict_code = #{record.dictCode,jdbcType=BIGINT},
+      dict_sort = #{record.dictSort,jdbcType=INTEGER},
+      dict_label = #{record.dictLabel,jdbcType=VARCHAR},
+      dict_value = #{record.dictValue,jdbcType=VARCHAR},
+      dict_type = #{record.dictType,jdbcType=VARCHAR},
+      css_class = #{record.cssClass,jdbcType=VARCHAR},
+      list_class = #{record.listClass,jdbcType=VARCHAR},
+      is_default = #{record.isDefault,jdbcType=CHAR},
+      status = #{record.status,jdbcType=CHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},

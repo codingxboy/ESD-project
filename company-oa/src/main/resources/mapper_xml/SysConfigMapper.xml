@@ -82,7 +82,7 @@
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_sys_config
+    from sys_config
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,13 +91,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysConfigExample">
-    delete from oa_sys_config
+    delete from sys_config
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysConfig">
-    insert into oa_sys_config (config_id, config_name, config_key,
+    insert into sys_config (config_id, config_name, config_key,
       config_value, config_type, create_by,
       create_time, update_by, update_time,
       remark)
@@ -107,7 +107,7 @@
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysConfig">
-    insert into oa_sys_config
+    insert into sys_config
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="configId != null">
         config_id,
@@ -174,13 +174,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysConfigExample" resultType="java.lang.Long">
-    select count(*) from oa_sys_config
+    select count(*) from sys_config
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_sys_config
+    update sys_config
     <set>
       <if test="record.configId != null">
         config_id = #{record.configId,jdbcType=INTEGER},
@@ -218,7 +218,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_sys_config
+    update sys_config
     set config_id = #{record.configId,jdbcType=INTEGER},
       config_name = #{record.configName,jdbcType=VARCHAR},
       config_key = #{record.configKey,jdbcType=VARCHAR},

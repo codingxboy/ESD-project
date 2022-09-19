@@ -5,13 +5,15 @@
     <result column="notice_id" jdbcType="INTEGER" property="noticeId" />
     <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle" />
     <result column="notice_type" jdbcType="CHAR" property="noticeType" />
-    <result column="notice_content" jdbcType="VARCHAR" property="noticeContent" />
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yunhe.entity.domain.oa.SysNotice">
+    <result column="notice_content" jdbcType="LONGVARBINARY" property="noticeContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,9 +74,29 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    notice_id, notice_title, notice_type, notice_content, status, create_by, create_time,
-    update_by, update_time, remark
+    notice_id, notice_title, notice_type, status, create_by, create_time, update_by,
+    update_time, remark
   </sql>
+  <sql id="Blob_Column_List">
+    notice_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yunhe.entity.domain.oa.SysNoticeExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_notice
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysNoticeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -82,7 +104,7 @@
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_sys_notice
+    from sys_notice
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,23 +113,23 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysNoticeExample">
-    delete from oa_sys_notice
+    delete from sys_notice
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysNotice">
-    insert into oa_sys_notice (notice_id, notice_title, notice_type,
-      notice_content, status, create_by,
-      create_time, update_by, update_time,
-      remark)
+    insert into sys_notice (notice_id, notice_title, notice_type,
+      status, create_by, create_time,
+      update_by, update_time, remark,
+      notice_content)
     values (#{noticeId,jdbcType=INTEGER}, #{noticeTitle,jdbcType=VARCHAR}, #{noticeType,jdbcType=CHAR},
-      #{noticeContent,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR},
-      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
-      #{remark,jdbcType=VARCHAR})
+      #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR},
+      #{noticeContent,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysNotice">
-    insert into oa_sys_notice
+    insert into sys_notice
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="noticeId != null">
         notice_id,
@@ -117,9 +139,6 @@
       </if>
       <if test="noticeType != null">
         notice_type,
-      </if>
-      <if test="noticeContent != null">
-        notice_content,
       </if>
       <if test="status != null">
         status,
@@ -139,6 +158,9 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="noticeContent != null">
+        notice_content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="noticeId != null">
@@ -149,9 +171,6 @@
       </if>
       <if test="noticeType != null">
         #{noticeType,jdbcType=CHAR},
-      </if>
-      <if test="noticeContent != null">
-        #{noticeContent,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -171,16 +190,19 @@
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="noticeContent != null">
+        #{noticeContent,jdbcType=LONGVARBINARY},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysNoticeExample" resultType="java.lang.Long">
-    select count(*) from oa_sys_notice
+    select count(*) from sys_notice
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_sys_notice
+    update sys_notice
     <set>
       <if test="record.noticeId != null">
         notice_id = #{record.noticeId,jdbcType=INTEGER},
@@ -190,9 +212,6 @@
       </if>
       <if test="record.noticeType != null">
         notice_type = #{record.noticeType,jdbcType=CHAR},
-      </if>
-      <if test="record.noticeContent != null">
-        notice_content = #{record.noticeContent,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
@@ -212,17 +231,35 @@
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.noticeContent != null">
+        notice_content = #{record.noticeContent,jdbcType=LONGVARBINARY},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
-    update oa_sys_notice
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sys_notice
     set notice_id = #{record.noticeId,jdbcType=INTEGER},
       notice_title = #{record.noticeTitle,jdbcType=VARCHAR},
       notice_type = #{record.noticeType,jdbcType=CHAR},
-      notice_content = #{record.noticeContent,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      notice_content = #{record.noticeContent,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_notice
+    set notice_id = #{record.noticeId,jdbcType=INTEGER},
+      notice_title = #{record.noticeTitle,jdbcType=VARCHAR},
+      notice_type = #{record.noticeType,jdbcType=CHAR},
       status = #{record.status,jdbcType=CHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},

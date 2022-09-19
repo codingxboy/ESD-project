@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunhe.company.oa.mappers.UserPostMapper">
-  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.UserPost">
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="post_id" jdbcType="BIGINT" property="postId" />
+<mapper namespace="com.yunhe.company.oa.mappers.SysRoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.SysRoleMenu">
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,16 +64,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, post_id
+    role_id, menu_id
   </sql>
-  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.UserPostExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysRoleMenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_user_post
+    from sys_role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -81,49 +81,49 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.UserPostExample">
-    delete from oa_user_post
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysRoleMenuExample">
+    delete from sys_role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.UserPost">
-    insert into oa_user_post (user_id, post_id)
-    values (#{userId,jdbcType=BIGINT}, #{postId,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysRoleMenu">
+    insert into sys_role_menu (role_id, menu_id)
+    values (#{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.UserPost">
-    insert into oa_user_post
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysRoleMenu">
+    insert into sys_role_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
+      <if test="roleId != null">
+        role_id,
       </if>
-      <if test="postId != null">
-        post_id,
+      <if test="menuId != null">
+        menu_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
       </if>
-      <if test="postId != null">
-        #{postId,jdbcType=BIGINT},
+      <if test="menuId != null">
+        #{menuId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.UserPostExample" resultType="java.lang.Long">
-    select count(*) from oa_user_post
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysRoleMenuExample" resultType="java.lang.Long">
+    select count(*) from sys_role_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_user_post
+    update sys_role_menu
     <set>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=BIGINT},
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=BIGINT},
       </if>
-      <if test="record.postId != null">
-        post_id = #{record.postId,jdbcType=BIGINT},
+      <if test="record.menuId != null">
+        menu_id = #{record.menuId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -131,9 +131,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_user_post
-    set user_id = #{record.userId,jdbcType=BIGINT},
-      post_id = #{record.postId,jdbcType=BIGINT}
+    update sys_role_menu
+    set role_id = #{record.roleId,jdbcType=BIGINT},
+      menu_id = #{record.menuId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

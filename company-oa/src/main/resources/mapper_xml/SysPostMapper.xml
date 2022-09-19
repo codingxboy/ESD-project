@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunhe.company.oa.mappers.DictTypeMapper">
-  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.DictType">
-    <result column="dict_id" jdbcType="BIGINT" property="dictId" />
-    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
-    <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
+<mapper namespace="com.yunhe.company.oa.mappers.SysPostMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.SysPost">
+    <result column="post_id" jdbcType="BIGINT" property="postId" />
+    <result column="post_code" jdbcType="VARCHAR" property="postCode" />
+    <result column="post_name" jdbcType="VARCHAR" property="postName" />
+    <result column="post_sort" jdbcType="INTEGER" property="postSort" />
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -71,17 +72,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    dict_id, dict_name, dict_type, status, create_by, create_time, update_by, update_time,
-    remark
+    post_id, post_code, post_name, post_sort, status, create_by, create_time, update_by,
+    update_time, remark
   </sql>
-  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.DictTypeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysPostExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_dict_type
+    from sys_post
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,33 +90,36 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.DictTypeExample">
-    delete from oa_dict_type
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysPostExample">
+    delete from sys_post
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.DictType">
-    insert into oa_dict_type (dict_id, dict_name, dict_type,
-      status, create_by, create_time,
-      update_by, update_time, remark
-      )
-    values (#{dictId,jdbcType=BIGINT}, #{dictName,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR},
-      #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
-      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysPost">
+    insert into sys_post (post_id, post_code, post_name,
+      post_sort, status, create_by,
+      create_time, update_by, update_time,
+      remark)
+    values (#{postId,jdbcType=BIGINT}, #{postCode,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR},
+      #{postSort,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP},
+      #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.DictType">
-    insert into oa_dict_type
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysPost">
+    insert into sys_post
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="dictId != null">
-        dict_id,
+      <if test="postId != null">
+        post_id,
       </if>
-      <if test="dictName != null">
-        dict_name,
+      <if test="postCode != null">
+        post_code,
       </if>
-      <if test="dictType != null">
-        dict_type,
+      <if test="postName != null">
+        post_name,
+      </if>
+      <if test="postSort != null">
+        post_sort,
       </if>
       <if test="status != null">
         status,
@@ -137,14 +141,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="dictId != null">
-        #{dictId,jdbcType=BIGINT},
+      <if test="postId != null">
+        #{postId,jdbcType=BIGINT},
       </if>
-      <if test="dictName != null">
-        #{dictName,jdbcType=VARCHAR},
+      <if test="postCode != null">
+        #{postCode,jdbcType=VARCHAR},
       </if>
-      <if test="dictType != null">
-        #{dictType,jdbcType=VARCHAR},
+      <if test="postName != null">
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="postSort != null">
+        #{postSort,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -166,23 +173,26 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.DictTypeExample" resultType="java.lang.Long">
-    select count(*) from oa_dict_type
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysPostExample" resultType="java.lang.Long">
+    select count(*) from sys_post
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_dict_type
+    update sys_post
     <set>
-      <if test="record.dictId != null">
-        dict_id = #{record.dictId,jdbcType=BIGINT},
+      <if test="record.postId != null">
+        post_id = #{record.postId,jdbcType=BIGINT},
       </if>
-      <if test="record.dictName != null">
-        dict_name = #{record.dictName,jdbcType=VARCHAR},
+      <if test="record.postCode != null">
+        post_code = #{record.postCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.dictType != null">
-        dict_type = #{record.dictType,jdbcType=VARCHAR},
+      <if test="record.postName != null">
+        post_name = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postSort != null">
+        post_sort = #{record.postSort,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
@@ -208,10 +218,11 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_dict_type
-    set dict_id = #{record.dictId,jdbcType=BIGINT},
-      dict_name = #{record.dictName,jdbcType=VARCHAR},
-      dict_type = #{record.dictType,jdbcType=VARCHAR},
+    update sys_post
+    set post_id = #{record.postId,jdbcType=BIGINT},
+      post_code = #{record.postCode,jdbcType=VARCHAR},
+      post_name = #{record.postName,jdbcType=VARCHAR},
+      post_sort = #{record.postSort,jdbcType=INTEGER},
       status = #{record.status,jdbcType=CHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},

@@ -85,7 +85,7 @@
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_sys_job
+    from sys_job
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,13 +94,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysJobExample">
-    delete from oa_sys_job
+    delete from sys_job
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysJob">
-    insert into oa_sys_job (job_id, job_name, job_group,
+    insert into sys_job (job_id, job_name, job_group,
       invoke_target, cron_expression, misfire_policy,
       concurrent, status, create_by,
       create_time, update_by, update_time,
@@ -112,7 +112,7 @@
       #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysJob">
-    insert into oa_sys_job
+    insert into sys_job
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="jobId != null">
         job_id,
@@ -197,13 +197,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysJobExample" resultType="java.lang.Long">
-    select count(*) from oa_sys_job
+    select count(*) from sys_job
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_sys_job
+    update sys_job
     <set>
       <if test="record.jobId != null">
         job_id = #{record.jobId,jdbcType=BIGINT},
@@ -250,7 +250,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_sys_job
+    update sys_job
     set job_id = #{record.jobId,jdbcType=BIGINT},
       job_name = #{record.jobName,jdbcType=VARCHAR},
       job_group = #{record.jobGroup,jdbcType=VARCHAR},

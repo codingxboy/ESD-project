@@ -80,7 +80,7 @@
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_sys_logininfor
+    from sys_logininfor
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,13 +89,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysLoginInforExample">
-    delete from oa_sys_logininfor
+    delete from sys_logininfor
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysLoginInfor">
-    insert into oa_sys_logininfor (info_id, user_name, ipaddr,
+    insert into sys_logininfor (info_id, user_name, ipaddr,
       login_location, browser, os,
       status, msg, login_time
       )
@@ -105,7 +105,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysLoginInfor">
-    insert into oa_sys_logininfor
+    insert into sys_logininfor
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="infoId != null">
         info_id,
@@ -166,13 +166,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysLoginInforExample" resultType="java.lang.Long">
-    select count(*) from oa_sys_logininfor
+    select count(*) from sys_logininfor
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_sys_logininfor
+    update sys_logininfor
     <set>
       <if test="record.infoId != null">
         info_id = #{record.infoId,jdbcType=BIGINT},
@@ -207,7 +207,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_sys_logininfor
+    update sys_logininfor
     set info_id = #{record.infoId,jdbcType=BIGINT},
       user_name = #{record.userName,jdbcType=VARCHAR},
       ipaddr = #{record.ipaddr,jdbcType=VARCHAR},

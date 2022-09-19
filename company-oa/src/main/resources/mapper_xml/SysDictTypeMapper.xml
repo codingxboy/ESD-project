@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunhe.company.oa.mappers.RoleMapper">
-  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.Role">
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="role_key" jdbcType="VARCHAR" property="roleKey" />
-    <result column="role_sort" jdbcType="INTEGER" property="roleSort" />
-    <result column="data_scope" jdbcType="CHAR" property="dataScope" />
+<mapper namespace="com.yunhe.company.oa.mappers.SysDictTypeMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.SysDictType">
+    <result column="dict_id" jdbcType="BIGINT" property="dictId" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
     <result column="status" jdbcType="CHAR" property="status" />
-    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
@@ -74,17 +71,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    role_id, role_name, role_key, role_sort, data_scope, status, del_flag, create_by,
-    create_time, update_by, update_time, remark
+    dict_id, dict_name, dict_type, status, create_by, create_time, update_by, update_time,
+    remark
   </sql>
-  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.RoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysDictTypeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_role
+    from sys_dict_type
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,47 +89,36 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.RoleExample">
-    delete from oa_role
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysDictTypeExample">
+    delete from sys_dict_type
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.Role">
-    insert into oa_role (role_id, role_name, role_key,
-      role_sort, data_scope, status,
-      del_flag, create_by, create_time,
+  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysDictType">
+    insert into sys_dict_type (dict_id, dict_name, dict_type,
+      status, create_by, create_time,
       update_by, update_time, remark
       )
-    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleKey,jdbcType=VARCHAR},
-      #{roleSort,jdbcType=INTEGER}, #{dataScope,jdbcType=CHAR}, #{status,jdbcType=CHAR},
-      #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+    values (#{dictId,jdbcType=BIGINT}, #{dictName,jdbcType=VARCHAR}, #{dictType,jdbcType=VARCHAR},
+      #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.Role">
-    insert into oa_role
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysDictType">
+    insert into sys_dict_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        role_id,
+      <if test="dictId != null">
+        dict_id,
       </if>
-      <if test="roleName != null">
-        role_name,
+      <if test="dictName != null">
+        dict_name,
       </if>
-      <if test="roleKey != null">
-        role_key,
-      </if>
-      <if test="roleSort != null">
-        role_sort,
-      </if>
-      <if test="dataScope != null">
-        data_scope,
+      <if test="dictType != null">
+        dict_type,
       </if>
       <if test="status != null">
         status,
-      </if>
-      <if test="delFlag != null">
-        del_flag,
       </if>
       <if test="createBy != null">
         create_by,
@@ -151,26 +137,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        #{roleId,jdbcType=BIGINT},
+      <if test="dictId != null">
+        #{dictId,jdbcType=BIGINT},
       </if>
-      <if test="roleName != null">
-        #{roleName,jdbcType=VARCHAR},
+      <if test="dictName != null">
+        #{dictName,jdbcType=VARCHAR},
       </if>
-      <if test="roleKey != null">
-        #{roleKey,jdbcType=VARCHAR},
-      </if>
-      <if test="roleSort != null">
-        #{roleSort,jdbcType=INTEGER},
-      </if>
-      <if test="dataScope != null">
-        #{dataScope,jdbcType=CHAR},
+      <if test="dictType != null">
+        #{dictType,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
-      </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=CHAR},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -189,35 +166,26 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.RoleExample" resultType="java.lang.Long">
-    select count(*) from oa_role
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysDictTypeExample" resultType="java.lang.Long">
+    select count(*) from sys_dict_type
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_role
+    update sys_dict_type
     <set>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=BIGINT},
+      <if test="record.dictId != null">
+        dict_id = #{record.dictId,jdbcType=BIGINT},
       </if>
-      <if test="record.roleName != null">
-        role_name = #{record.roleName,jdbcType=VARCHAR},
+      <if test="record.dictName != null">
+        dict_name = #{record.dictName,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleKey != null">
-        role_key = #{record.roleKey,jdbcType=VARCHAR},
-      </if>
-      <if test="record.roleSort != null">
-        role_sort = #{record.roleSort,jdbcType=INTEGER},
-      </if>
-      <if test="record.dataScope != null">
-        data_scope = #{record.dataScope,jdbcType=CHAR},
+      <if test="record.dictType != null">
+        dict_type = #{record.dictType,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
-      </if>
-      <if test="record.delFlag != null">
-        del_flag = #{record.delFlag,jdbcType=CHAR},
       </if>
       <if test="record.createBy != null">
         create_by = #{record.createBy,jdbcType=VARCHAR},
@@ -240,14 +208,11 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_role
-    set role_id = #{record.roleId,jdbcType=BIGINT},
-      role_name = #{record.roleName,jdbcType=VARCHAR},
-      role_key = #{record.roleKey,jdbcType=VARCHAR},
-      role_sort = #{record.roleSort,jdbcType=INTEGER},
-      data_scope = #{record.dataScope,jdbcType=CHAR},
+    update sys_dict_type
+    set dict_id = #{record.dictId,jdbcType=BIGINT},
+      dict_name = #{record.dictName,jdbcType=VARCHAR},
+      dict_type = #{record.dictType,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=CHAR},
-      del_flag = #{record.delFlag,jdbcType=CHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},

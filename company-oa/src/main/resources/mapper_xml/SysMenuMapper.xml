@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yunhe.company.oa.mappers.DeptMapper">
-  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.Dept">
-    <result column="dept_id" jdbcType="BIGINT" property="deptId" />
+<mapper namespace="com.yunhe.company.oa.mappers.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.yunhe.entity.domain.oa.SysMenu">
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="ancestors" jdbcType="VARCHAR" property="ancestors" />
-    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
     <result column="order_num" jdbcType="INTEGER" property="orderNum" />
-    <result column="leader" jdbcType="VARCHAR" property="leader" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="is_frame" jdbcType="INTEGER" property="isFrame" />
+    <result column="is_cache" jdbcType="INTEGER" property="isCache" />
+    <result column="menu_type" jdbcType="CHAR" property="menuType" />
+    <result column="visible" jdbcType="CHAR" property="visible" />
     <result column="status" jdbcType="CHAR" property="status" />
-    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="perms" jdbcType="VARCHAR" property="perms" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,17 +80,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status,
-    del_flag, create_by, create_time, update_by, update_time
+    menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type,
+    visible, status, perms, icon, create_by, create_time, update_by, update_time, remark
   </sql>
-  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.DeptExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yunhe.entity.domain.oa.SysMenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'false' as QUERYID,
     <include refid="Base_Column_List" />
-    from oa_dept
+    from sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,56 +98,67 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.DeptExample">
-    delete from oa_dept
+  <delete id="deleteByExample" parameterType="com.yunhe.entity.domain.oa.SysMenuExample">
+    delete from sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.Dept">
-    insert into oa_dept (dept_id, parent_id, ancestors,
-      dept_name, order_num, leader,
-      phone, email, status,
-      del_flag, create_by, create_time,
-      update_by, update_time)
-    values (#{deptId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{ancestors,jdbcType=VARCHAR},
-      #{deptName,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{leader,jdbcType=VARCHAR},
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
-      #{delFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
-      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.yunhe.entity.domain.oa.SysMenu">
+    insert into sys_menu (menu_id, menu_name, parent_id,
+      order_num, path, component,
+      is_frame, is_cache, menu_type,
+      visible, status, perms, icon,
+      create_by, create_time, update_by,
+      update_time, remark)
+    values (#{menuId,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT},
+      #{orderNum,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR},
+      #{isFrame,jdbcType=INTEGER}, #{isCache,jdbcType=INTEGER}, #{menuType,jdbcType=CHAR},
+      #{visible,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{perms,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.Dept">
-    insert into oa_dept
+  <insert id="insertSelective" parameterType="com.yunhe.entity.domain.oa.SysMenu">
+    insert into sys_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="deptId != null">
-        dept_id,
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="menuName != null">
+        menu_name,
       </if>
       <if test="parentId != null">
         parent_id,
       </if>
-      <if test="ancestors != null">
-        ancestors,
-      </if>
-      <if test="deptName != null">
-        dept_name,
-      </if>
       <if test="orderNum != null">
         order_num,
       </if>
-      <if test="leader != null">
-        leader,
+      <if test="path != null">
+        path,
       </if>
-      <if test="phone != null">
-        phone,
+      <if test="component != null">
+        component,
       </if>
-      <if test="email != null">
-        email,
+      <if test="isFrame != null">
+        is_frame,
+      </if>
+      <if test="isCache != null">
+        is_cache,
+      </if>
+      <if test="menuType != null">
+        menu_type,
+      </if>
+      <if test="visible != null">
+        visible,
       </if>
       <if test="status != null">
         status,
       </if>
-      <if test="delFlag != null">
-        del_flag,
+      <if test="perms != null">
+        perms,
+      </if>
+      <if test="icon != null">
+        icon,
       </if>
       <if test="createBy != null">
         create_by,
@@ -157,37 +172,49 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="remark != null">
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="deptId != null">
-        #{deptId,jdbcType=BIGINT},
+      <if test="menuId != null">
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null">
         #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="ancestors != null">
-        #{ancestors,jdbcType=VARCHAR},
-      </if>
-      <if test="deptName != null">
-        #{deptName,jdbcType=VARCHAR},
-      </if>
       <if test="orderNum != null">
         #{orderNum,jdbcType=INTEGER},
       </if>
-      <if test="leader != null">
-        #{leader,jdbcType=VARCHAR},
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="isFrame != null">
+        #{isFrame,jdbcType=INTEGER},
+      </if>
+      <if test="isCache != null">
+        #{isCache,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null">
+        #{menuType,jdbcType=CHAR},
+      </if>
+      <if test="visible != null">
+        #{visible,jdbcType=CHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
       </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=CHAR},
+      <if test="perms != null">
+        #{perms,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null">
         #{createBy,jdbcType=VARCHAR},
@@ -201,46 +228,58 @@
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.DeptExample" resultType="java.lang.Long">
-    select count(*) from oa_dept
+  <select id="countByExample" parameterType="com.yunhe.entity.domain.oa.SysMenuExample" resultType="java.lang.Long">
+    select count(*) from sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oa_dept
+    update sys_menu
     <set>
-      <if test="record.deptId != null">
-        dept_id = #{record.deptId,jdbcType=BIGINT},
+      <if test="record.menuId != null">
+        menu_id = #{record.menuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuName != null">
+        menu_name = #{record.menuName,jdbcType=VARCHAR},
       </if>
       <if test="record.parentId != null">
         parent_id = #{record.parentId,jdbcType=BIGINT},
       </if>
-      <if test="record.ancestors != null">
-        ancestors = #{record.ancestors,jdbcType=VARCHAR},
-      </if>
-      <if test="record.deptName != null">
-        dept_name = #{record.deptName,jdbcType=VARCHAR},
-      </if>
       <if test="record.orderNum != null">
         order_num = #{record.orderNum,jdbcType=INTEGER},
       </if>
-      <if test="record.leader != null">
-        leader = #{record.leader,jdbcType=VARCHAR},
+      <if test="record.path != null">
+        path = #{record.path,jdbcType=VARCHAR},
       </if>
-      <if test="record.phone != null">
-        phone = #{record.phone,jdbcType=VARCHAR},
+      <if test="record.component != null">
+        component = #{record.component,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
+      <if test="record.isFrame != null">
+        is_frame = #{record.isFrame,jdbcType=INTEGER},
+      </if>
+      <if test="record.isCache != null">
+        is_cache = #{record.isCache,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuType != null">
+        menu_type = #{record.menuType,jdbcType=CHAR},
+      </if>
+      <if test="record.visible != null">
+        visible = #{record.visible,jdbcType=CHAR},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
       </if>
-      <if test="record.delFlag != null">
-        del_flag = #{record.delFlag,jdbcType=CHAR},
+      <if test="record.perms != null">
+        perms = #{record.perms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.icon != null">
+        icon = #{record.icon,jdbcType=VARCHAR},
       </if>
       <if test="record.createBy != null">
         create_by = #{record.createBy,jdbcType=VARCHAR},
@@ -254,27 +293,34 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oa_dept
-    set dept_id = #{record.deptId,jdbcType=BIGINT},
+    update sys_menu
+    set menu_id = #{record.menuId,jdbcType=BIGINT},
+      menu_name = #{record.menuName,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=BIGINT},
-      ancestors = #{record.ancestors,jdbcType=VARCHAR},
-      dept_name = #{record.deptName,jdbcType=VARCHAR},
       order_num = #{record.orderNum,jdbcType=INTEGER},
-      leader = #{record.leader,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
+      path = #{record.path,jdbcType=VARCHAR},
+      component = #{record.component,jdbcType=VARCHAR},
+      is_frame = #{record.isFrame,jdbcType=INTEGER},
+      is_cache = #{record.isCache,jdbcType=INTEGER},
+      menu_type = #{record.menuType,jdbcType=CHAR},
+      visible = #{record.visible,jdbcType=CHAR},
       status = #{record.status,jdbcType=CHAR},
-      del_flag = #{record.delFlag,jdbcType=CHAR},
+      perms = #{record.perms,jdbcType=VARCHAR},
+      icon = #{record.icon,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
