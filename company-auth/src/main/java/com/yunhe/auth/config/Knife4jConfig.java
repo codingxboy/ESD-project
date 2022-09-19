@@ -1,7 +1,9 @@
 package com.yunhe.auth.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -19,14 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 插件集成配置
- *
- * @author jishenghua
- * @version 1.0
+ * @description: 插件集成配置
+ * @param:
+ * @return:
+ * @author xiaozuqin
+ * @date: 2022/9/8 17:29
  */
-
+@EnableOpenApi
+@EnableKnife4j
 @Configuration
-@EnableSwagger2WebMvc
 public class Knife4jConfig {
 
     @Value("${knife4j.password_token_url}")
@@ -50,7 +54,7 @@ public class Knife4jConfig {
         scopes.add(new AuthorizationScope("writes", "write all resources"));
 
         SecurityReference securityReference = new SecurityReference("oauth2", scopes.toArray(new AuthorizationScope[]{}));
-        SecurityContext securityContext = new SecurityContext(Lists.newArrayList(securityReference), PathSelectors.ant("/**"));
+        SecurityContext securityContext = new SecurityContext(Lists.newArrayList(securityReference), PathSelectors.ant("/**"),null,null);
         //schemas
         List<SecurityScheme> securitySchemes = Lists.newArrayList(oAuth);
         //securyContext

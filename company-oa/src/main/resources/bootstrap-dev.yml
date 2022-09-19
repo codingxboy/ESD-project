@@ -17,3 +17,6 @@ spring:
           data-id: company-common.yaml
           refresh: true
 
+#mybatis-plus:
+#    # 加载全局的配置文件
+#    configLocation: classpath:mybatis/mybatis-config.xml

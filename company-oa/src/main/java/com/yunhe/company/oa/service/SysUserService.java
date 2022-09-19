@@ -2,18 +2,18 @@ package com.yunhe.company.oa.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yunhe.company.oa.domain.dto.UserAuthDTO;
-import com.yunhe.entity.domain.oa.User;
-
+import com.yunhe.entity.domain.oa.SysUser;
 
 
 /**
- * @ClassName UserService
- * @Description TODO
- * @Author xiaozuqin
- * @Date 2022/8/25 11:51
- * @Version 1.0
+ * @description:
+ * @param:
+ * @return:
+ * @author xiaozuqin
+ * @date: 2022/9/16 10:15
  */
-public interface UserService extends IService<User> {
+
+public interface SysUserService extends IService<SysUser> {
 
     UserAuthDTO getUserByUserName(String userName);
 }

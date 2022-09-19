@@ -43,8 +43,9 @@
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
 
         <!-- api doc -->
-        <knife4j.version>3.0.3</knife4j.version>
+        <knife4j.version>2.0.9</knife4j.version>
         <swagger.version>1.6.2</swagger.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
 
         <!-- tools -->
         <lombok.version>1.18.18</lombok.version>
@@ -227,6 +228,14 @@
                 <artifactId>knife4j-spring-ui</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox-boot-starter.version}</version>
+            </dependency>
+
             <!-- ELK -->
             <dependency>
                 <groupId>net.logstash.logback</groupId>

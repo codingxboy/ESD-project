@@ -1,8 +1,7 @@
 package com.yunhe.company.oa.controller;
 import com.yunhe.common.core.result.Result;
 import com.yunhe.company.oa.domain.dto.ClientAuthDTO;
-import com.yunhe.company.oa.service.OauthClientService;
-import com.yunhe.entity.domain.oa.OauthClient;
+//import com.yunhe.company.oa.service.OauthClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OauthClientController {
 
-    private final OauthClientService oauthClientService;
+//    private final OauthClientService oauthClientService;
 
     @ApiOperation(value = "获取 OAuth2 客户端认证信息")
     @GetMapping("/getOAuth2ClientById")
     public Result<ClientAuthDTO> getOAuth2ClientById(@RequestParam String clientId){
-        OauthClient oauthClient = oauthClientService.getById(clientId);
-        ClientAuthDTO clientAuthDTO = new ClientAuthDTO();
-        BeanUtils.copyProperties(oauthClient, clientAuthDTO);
-        return Result.success(clientAuthDTO);
+//        OauthClient oauthClient = oauthClientService.getById(clientId);
+//        ClientAuthDTO clientAuthDTO = new ClientAuthDTO();
+//        BeanUtils.copyProperties(oauthClient, clientAuthDTO);
+        return Result.success();
     }
 }

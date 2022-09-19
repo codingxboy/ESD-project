@@ -78,9 +78,9 @@ public class ResourceServerConfig {
                 .accessDeniedHandler(accessDeniedHandler()) // 处理未授权
                 .authenticationEntryPoint(authenticationEntryPoint()) //处理未认证
                 .and()
-                .csrf().disable()
-                .cors()
-                .configurationSource(corsConfigurationSource());
+                .csrf().disable();
+//                .cors()
+//                .configurationSource(corsConfigurationSource());
 
 
         return http.build();
