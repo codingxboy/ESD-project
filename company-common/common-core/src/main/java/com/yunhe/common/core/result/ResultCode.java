@@ -55,6 +55,7 @@ public enum ResultCode implements IResultCode, Serializable {
     PARAM_IS_NULL("A0410", "请求必填参数为空"),
 
     USER_UPLOAD_FILE_ERROR("A0700", "用户上传文件异常"),
+    USER_UPLOAD_FILE_SUCCESS("A0704", "用户上传文件成功"),
     USER_UPLOAD_FILE_TYPE_NOT_MATCH("A0701", "用户上传文件类型不匹配"),
     USER_UPLOAD_FILE_SIZE_EXCEEDS("A0702", "用户上传文件太大"),
     USER_UPLOAD_IMAGE_SIZE_EXCEEDS("A0703", "用户上传图片太大"),

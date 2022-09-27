@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -19,11 +21,13 @@ import java.net.UnknownHostException;
  * @Date 2022/8/22 11:11
  * @Version 1.0
  */
-@MapperScan("com.yunhe.company.oa.mappers")
+@MapperScan(basePackages = "com.yunhe.company.oa.mappers")
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableFeignClients
 @Slf4j
+//@ComponentScan("com.yunhe.common.rabbitmq")
+@EnableAsync // 开启异步
 public class OaApplication {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(OaApplication.class, args);

@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yunhe.common.file.service.MinioService,\
+  com.yunhe.common.file.controller.FileController
+

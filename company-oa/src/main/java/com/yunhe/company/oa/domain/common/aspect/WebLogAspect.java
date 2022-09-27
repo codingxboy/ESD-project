@@ -3,6 +3,7 @@ package com.yunhe.company.oa.domain.common.aspect;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yunhe.common.core.util.IpUtil;
+import com.yunhe.company.oa.domain.common.utils.GeoIPUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -25,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 public class WebLogAspect {
     private final static Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-    @Pointcut("execution(public * com.yunhe.company.oa.controller..*.*(..)))")
+    // 配置织入点
+    @Pointcut("@annotation(com.yunhe.common.web.annotation.WebLog)")
+//    @Pointcut("execution(public * com.yunhe.company.oa.controller..*.*(..)))")
     public void webLog() {}
 
     /**
@@ -48,6 +51,7 @@ public class WebLogAspect {
         // 打印请求的 IP
 //        logger.info("IP             : {}", request.getRemoteAddr());
         logger.info("IP             : {}", IpUtil.getIpAddr(request));
+//        logger.info("IP             : {}", GeoIPUtil.getIpInfo(IpUtil.getIpAddr(request)));
         // 打印请求入参
         logger.info("Request Args   : {}", new GsonBuilder().setPrettyPrinting().create().toJson(joinPoint.getArgs()));
     }
