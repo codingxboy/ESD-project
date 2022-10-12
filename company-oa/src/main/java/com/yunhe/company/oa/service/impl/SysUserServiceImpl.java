@@ -22,8 +22,6 @@ import java.util.List;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper,SysUser> implements SysUserService {
     @Resource
-    private SysUserMapper sysUserMapper;
-    @Resource
     private SysDeptMapper sysDeptMapper;
 
 

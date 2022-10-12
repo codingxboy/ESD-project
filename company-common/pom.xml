@@ -22,6 +22,7 @@
         <module>common-elasticsearch</module>
         <module>common-file</module>
         <module>common-rabbitmq</module>
+        <module>common-jimureport</module>
     </modules>
 
     <properties>

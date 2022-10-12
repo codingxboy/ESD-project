@@ -1,5 +1,6 @@
 package com.yunhe.company.oa.controller;
 import com.yunhe.common.core.result.Result;
+import com.yunhe.common.web.annotation.WebLog;
 import com.yunhe.company.oa.domain.dto.UserAuthDTO;
 //import com.yunhe.company.oa.service.impl.SysUserServiceImpl;
 import com.yunhe.company.oa.service.impl.SysUserServiceImpl;
@@ -35,6 +36,7 @@ public class UserController {
 
     @ApiOperation(value = "获取全部用户信息")
     @GetMapping("/all")
+    @WebLog
     public Result<List<SysUser>> getAllUserList(){
         return Result.success(userServiceImpl.getAllUsers());
     }
@@ -44,5 +46,7 @@ public class UserController {
     public Result<List<SysDept>> getAllDepartList(){
         return Result.success(userServiceImpl.getDepartList());
     }
+
+
 
 }

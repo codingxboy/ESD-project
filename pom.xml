@@ -88,6 +88,10 @@
         <dynamic-datasource-spring-boot-starter.version>3.5.1</dynamic-datasource-spring-boot-starter.version>
         <!-- 图片压缩 -->
         <thumbnailator.version>0.4.17</thumbnailator.version>
+        <!--集成Freemarker-->
+        <spring-boot-starter-freemarker.version>2.6.7</spring-boot-starter-freemarker.version>
+        <!--集成jimureport-->
+        <jimureport-spring-boot-starter.version>1.4.0-beta</jimureport-spring-boot-starter.version>
 
     </properties>
 
@@ -201,6 +205,8 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+                <optional>true</optional>
+                <scope>runtime</scope>
             </dependency>
 
             <dependency>
@@ -327,6 +333,21 @@
                 <artifactId>thumbnailator</artifactId>
                 <version>${thumbnailator.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-freemarker -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-freemarker</artifactId>
+                <version>${spring-boot-starter-freemarker.version}</version>
+            </dependency>
+
+            <!-- JimuReport -->
+            <dependency>
+                <groupId>org.jeecgframework.jimureport</groupId>
+                <artifactId>jimureport-spring-boot-starter</artifactId>
+                <version>${jimureport-spring-boot-starter.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

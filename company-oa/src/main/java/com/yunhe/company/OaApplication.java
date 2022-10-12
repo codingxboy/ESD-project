@@ -1,16 +1,26 @@
 package com.yunhe.company;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -23,12 +33,14 @@ import java.net.UnknownHostException;
  */
 @MapperScan(basePackages = "com.yunhe.company.oa.mappers")
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class},
+        scanBasePackages = {"org.jeecg.modules.jmreport","com.yunhe.company"})
+//@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 @EnableFeignClients
-@Slf4j
 //@ComponentScan("com.yunhe.common.rabbitmq")
 @EnableAsync // 开启异步
-public class OaApplication {
+@Slf4j
+public class OaApplication implements WebMvcConfigurer {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(OaApplication.class, args);
         Environment env = applicationContext.getEnvironment();
@@ -42,5 +54,11 @@ public class OaApplication {
                 "Swagger-UI: \t\thttp://" + ip + ":" + port + path + "/doc.html\n" +
                 "OA系统服务启动成功~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\t"+
                 "----------------------------------------------------------\n\t");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

@@ -16,10 +16,11 @@ import springfox.documentation.spring.web.plugins.Docket;
 //import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * 插件集成配置
- *
- * @author jishenghua
- * @version 1.0
+ * @description:
+ * @param:
+ * @return:
+ * @author xiaozuqin
+ * @date: 2022/10/8 11:49
  */
 @EnableOpenApi
 @Configuration
